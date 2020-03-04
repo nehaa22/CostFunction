@@ -1,18 +1,33 @@
 import numpy as np
 
-X = np.array(([3], [1], [2]))
-Y = np.array(([1], [2], [3]))
-theta = 0.5
-h = X * theta
-m = len(Y)
+X = [1, 2, 3]
+Y = [1, 2.5, 3.5]
+hypothesis = [0.5, 1.0, 1.5]
+
+mvalue = len(X)
+limit = (1 / (2 * mvalue))
+values = []
 
 
-def costfunction(x, y, thetas):
-    sumarry = []
-    for x, y in zip(X, Y):
-        sumvalue = (1 / (2 * m)) * np.math.pow(((x * thetas) - y), 2)
-        sumarry.append(sumvalue)
-    return sumarry
+def x_multiply_theta(x, theta):
+    assumed = []
+    for terms in range(mvalue):
+        assumed.append(x[terms] * theta)
+    return assumed
 
 
-print(costfunction(X, Y, theta))
+def cost_function(m, x, y):
+    summation = 0
+    for term in range(m):
+        cost = np.math.pow((x[term] - y[term]), 2)
+        summation += cost
+    return summation / limit
+
+
+for i in range(len(hypothesis)):
+    hypothesis_values = x_multiply_theta(X, hypothesis[i])
+    value = cost_function(mvalue, hypothesis_values, Y)
+    values.append(value)
+
+    print(hypothesis[i], ",", value)
+print("Best fit for data :", min(values))
